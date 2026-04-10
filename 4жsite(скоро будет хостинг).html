@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Правила чата · Вступить в Telegram</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f0f4f8;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      padding: 32px 20px;
+      color: #0b1e2e;
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    /* шапка + приглашение */
+    .hero {
+      background: linear-gradient(135deg, #1e3c5c 0%, #112a40 100%);
+      border-radius: 40px;
+      padding: 40px 40px 36px;
+      box-shadow: 0 20px 30px -8px rgba(0,20,40,0.2);
+      border: 1px solid #2e5570;
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero h1 span {
+      background: #f5c542;
+      color: #0f1e2c;
+      padding: 4px 20px;
+      border-radius: 60px;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .hero-sub {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      margin-bottom: 28px;
+      border-left: 4px solid #f5c542;
+      padding-left: 24px;
+    }
+
+    .join-block {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px 30px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 60px;
+      padding: 16px 28px;
+      backdrop-filter: blur(4px);
+      border: 1px solid #3f6a8c;
+    }
+
+    .join-label {
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+
+    .telegram-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #2aabee;
+      color: white;
+      text-decoration: none;
+      padding: 18px 36px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.3rem;
+      box-shadow: 0 12px 18px -6px rgba(0,160,255,0.3);
+      transition: 0.15s;
+      border: 1px solid #7fc9ff;
+    }
+
+    .telegram-btn:hover {
+      background: #1c9be0;
+      transform: scale(1.01);
+      box-shadow: 0 18px 24px -8px #1c9be0;
+    }
+
+    .invite-link {
+      word-break: break-all;
+      background: #102433;
+      padding: 8px 22px;
+      border-radius: 50px;
+      font-family: monospace;
+      font-size: 1.1rem;
+      border: 1px solid #4f7e9e;
+    }
+
+    /* основные правила */
+    .rules-panel {
+      background: white;
+      border-radius: 36px;
+      padding: 36px 32px;
+      box-shadow: 0 15px 30px -10px rgba(0,0,0,0.05);
+      border: 1px solid #dde5ed;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 3px dashed #bccbd8;
+      padding-bottom: 16px;
+    }
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px 24px;
+    }
+
+    @media (max-width: 680px) {
+      .rules-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .rule-card {
+      border-radius: 28px;
+      padding: 24px 26px;
+      background: #fafcff;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.02);
+    }
+
+    .forbidden-card {
+      border-left: 8px solid #cf3e3e;
+      background: #fff8f7;
+    }
+
+    .allowed-card {
+      border-left: 8px solid #1f9a5e;
+      background: #f5fff9;
+    }
+
+    .card-header {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .forbidden-card .card-header {
+      color: #b22222;
+    }
+
+    .allowed-card .card-header {
+      color: #0e7347;
+    }
+
+    .rule-list {
+      list-style: none;
+    }
+
+    .rule-list li {
+      margin-bottom: 14px;
+      padding-left: 30px;
+      position: relative;
+      font-size: 1.05rem;
+    }
+
+    .forbidden-card .rule-list li::before {
+      content: "🚫";
+      position: absolute;
+      left: -2px;
+      top: 0;
+      font-size: 1.3rem;
+    }
+
+    .allowed-card .rule-list li::before {
+      content: "✅";
+      position: absolute;
+      left: -2px;
+      top: 0;
+      font-size: 1.3rem;
+    }
+
+    .punishment-box {
+      margin-top: 24px;
+      background: #f1f3f5;
+      border-radius: 22px;
+      padding: 18px 24px;
+      font-weight: 500;
+      border: 1px solid #ced9e3;
+      color: #1a2e40;
+    }
+
+    .clarify-block {
+      margin-top: 30px;
+      background: #fef9e3;
+      border-radius: 28px;
+      padding: 26px 30px;
+      border-left: 6px solid #e6b422;
+    }
+
+    .clarify-title {
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      color: #7a5c00;
+    }
+
+    .clarify-list {
+      padding-left: 24px;
+    }
+
+    .clarify-list li {
+      margin-bottom: 12px;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: #5e7180;
+      margin-top: 12px;
+    }
+
+    .tg-link-small {
+      background: #e7edf5;
+      padding: 12px 18px;
+      border-radius: 40px;
+      display: inline-block;
+      font-weight: 500;
+      border: 1px solid #bacddc;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  
+  <!-- Hero: приглашение и ссылка -->
+  <div class="hero">
+    <h1>
+      📢 ПРАВИЛА ЧАТА 
+      <span>Telegram</span>
+    </h1>
+    <div class="hero-sub">
+      уютное сообщество · уважение · активность · «4ж»
+    </div>
+    <div class="join-block">
+      <div class="join-label">🔗 Вступить в чат:</div>
+      <a href="https://t.me/+Ol08Tl8H0lRjYzhi" target="_blank" rel="noopener noreferrer" class="telegram-btn">
+        <span style="font-size: 1.8rem; line-height: 1;">📨</span> 
+        Присоединиться
+        <span style="font-size: 1.8rem; line-height: 1;">→</span>
+      </a>
+      <div class="invite-link">
+        https://t.me/+Ol08Tl8H0lRjYzhi
+      </div>
+    </div>
+    <p style="margin-top: 22px; font-size: 1rem; opacity: 0.85;">
+      ⚡ Перед вступлением ознакомьтесь с правилами ниже.
+    </p>
+  </div>
+
+  <!-- Основные правила -->
+  <div class="rules-panel">
+    <div class="section-title">
+      <span>📋 СВОД ПРАВИЛ ЧАТА</span>
+    </div>
+
+    <div class="rules-grid">
+      <!-- ЗАПРЕЩЕНО -->
+      <div class="rule-card forbidden-card">
+        <div class="card-header">
+          <span>🚫 ЗАПРЕЩЕНЫ</span>
+        </div>
+        <ul class="rule-list">
+          <li>нецензурная лексика.</li>
+          <li>флейм, оскорбление и оскорбительное поведение в сторону участников беседы с целью унижения их чести и достоинства личности; токсичность, манипуляции с психологией людей, прессинг, давление, высмеивание людей.</li>
+          <li>спам и реклама.</li>
+          <li>материалы содержащие насилие/издевательства над чем-либо или кем-либо.</li>
+          <li>оскорбление, осуждение и высмеивание админ-состава и их действий.</li>
+          <li>вымогательство или попрошайничество.</li>
+          <li>расизм/национализм/сексизм/гомофобия.</li>
+          <li>осуждение, высмеивание и шутки над религией, властью, внешней/внутренней политикой РФ.</li>
+          <li>материалы, содержащие контент 18+.</li>
+        </ul>
+        <div class="punishment-box">
+          <strong>► Наказание:</strong> предупреждение, кик или бан (на усмотрение администрации/чат-бота). Зависит от ситуации и степени нарушения. ◄
+        </div>
+      </div>
+
+      <!-- РАЗРЕШЕНО -->
+      <div class="rule-card allowed-card">
+        <div class="card-header">
+          <span>✅ РАЗРЕШЕНО</span>
+        </div>
+        <ul class="rule-list">
+          <li>активно общаться, шутить, обмениваться информацией, обсуждать между собой вопросы, связанные с тематикой сообщества и чатов.</li>
+          <li>создавать новые темы для обсуждения, участвовать в полемике, высказывать свое мнение, обмениваться новостями и интересным медиаконтентом.</li>
+          <li>способствовать участникам чата в решении проблем, публиковать ссылки на авторитетные источники в интернет-сети, где есть информация, позволяющая решить возникший вопрос.</li>
+          <li>сообщать и предлагать админ-составу идеи об улучшении нашего сообщества и чатов.</li>
+          <li>назначать встречи и договариваться о любых других мероприятиях.</li>
+          <li>использовать голосовые сообщения, объёмные цитаты, иностранные языки, эмодзи/стикеры/мемы (в разумных количествах).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Уточнения -->
+    <div class="clarify-block">
+      <div class="clarify-title">❗ УТОЧНЕНИЯ ❗</div>
+      <ul class="clarify-list">
+        <li>самопиар, взаимные лайки или участие в стороннем голосовании обсуждается с администрацией. Если ваше предложение не будет нарушать этики интернет-пространства, то будет разрешено его распространение в чате.</li>
+        <li>за неактив в течение долгого времени админы могут задать вопросы, касающиеся вашей заинтересованности в чатах и дальнейшего использования приложения "4ж".</li>
+        <li>дискуссии разнообразного формата (не противоречащие правилам) допустимы. При обсуждении сохраняйте уважительный тон, не провоцируйте на ссоры и не саботируйте дружную атмосферу чата.</li>
+      </ul>
+    </div>
+
+    <!-- Повтор ссылки и напоминание -->
+    <div style="margin-top: 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+      <div style="font-weight: 600; font-size: 1.2rem;">👇 Готовы присоединиться?</div>
+      <a href="https://t.me/+Ol08Tl8H0lRjYzhi" target="_blank" rel="noopener noreferrer" style="background: #2293d1; color: white; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 8px 14px rgba(34,147,209,0.25);">ВСТУПИТЬ В TELEGRAM-ЧАТ</a>
+      <div class="tg-link-small">
+        🔗 t.me/+Ol08Tl8H0lRjYzhi
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    © Чат сообщества · соблюдайте правила и уважайте друг друга
+  </div>
+</div>
+</body>
+</html>
